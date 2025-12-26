@@ -1,163 +1,141 @@
 
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { PROJECTS } from '../constants';
 import { Project } from '../types';
 
-const ExhibitionRibbon: React.FC<{ images: string[] }> = ({ images }) => {
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const [isHovered, setIsHovered] = useState(false);
+const ProjectSlider: React.FC<{ project: Project; index: number }> = ({ project, index }) => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const images = project.galleryImages || [project.imageUrl];
+  const thumbnailRef = useRef<HTMLDivElement>(null);
+
+  const handleImageChange = (newIndex: number) => {
+    if (newIndex === activeIndex || isTransitioning) return;
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setActiveIndex(newIndex);
+      setIsTransitioning(false);
+    }, 500);
+  };
 
   useEffect(() => {
-    let animationId: number;
-    const scroll = () => {
-      if (scrollRef.current && !isHovered) {
-        scrollRef.current.scrollLeft += 0.5; // Auto slow scroll
-        if (scrollRef.current.scrollLeft >= scrollRef.current.scrollWidth / 2) {
-          scrollRef.current.scrollLeft = 0;
-        }
+    if (thumbnailRef.current) {
+      const activeThumb = thumbnailRef.current.children[activeIndex] as HTMLElement;
+      if (activeThumb) {
+        thumbnailRef.current.scrollTo({
+          left: activeThumb.offsetLeft - thumbnailRef.current.offsetWidth / 2 + activeThumb.offsetWidth / 2,
+          behavior: 'smooth'
+        });
       }
-      animationId = requestAnimationFrame(scroll);
-    };
-    animationId = requestAnimationFrame(scroll);
-    return () => cancelAnimationFrame(animationId);
-  }, [isHovered]);
-
-  // Duplicate images for infinite effect
-  const displayImages = [...images, ...images];
+    }
+  }, [activeIndex]);
 
   return (
-    <div className="relative py-20 overflow-hidden">
-      <div className="absolute top-0 left-0 w-40 h-full bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
-      <div className="absolute top-0 right-0 w-40 h-full bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
-      
-      <div 
-        ref={scrollRef}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        className="flex space-x-10 overflow-x-hidden whitespace-nowrap cursor-grab active:cursor-grabbing py-10"
-      >
-        {displayImages.map((img, i) => (
-          <div 
-            key={i} 
-            className="inline-block w-[300px] md:w-[450px] aspect-[4/5] rounded-[40px] overflow-hidden shadow-2xl transition-all duration-700 hover:scale-105 hover:rotate-2 relative group"
-          >
-            <img src={img} className="w-full h-full object-cover grayscale-[30%] group-hover:grayscale-0 transition-all duration-700" alt="Exhibition Item" />
-            <div className="absolute inset-0 bg-rose-500/10 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
-            <div className="absolute bottom-6 left-6 opacity-0 group-hover:opacity-100 transition-all transform translate-y-4 group-hover:translate-y-0">
-               <span className="bg-white/90 backdrop-blur-xl px-4 py-2 rounded-full text-[9px] font-black uppercase tracking-widest text-rose-500">Asset Detail</span>
+    <div className="relative w-full py-16 md:py-24 mb-20 md:mb-32 group/project border-b border-rose-50 last:border-0">
+      {/* Giant Background Number - Hidden on mobile for clarity */}
+      <div className="absolute top-0 left-10 pointer-events-none select-none z-0 hidden lg:block">
+        <span className="text-[20vw] font-display font-black text-rose-50 opacity-40 italic leading-none">
+          0{index + 1}
+        </span>
+      </div>
+
+      <div className="max-w-[1920px] mx-auto px-6 md:px-16 lg:px-24 relative z-10">
+        
+        {/* Layout Switch: Column on Mobile, Grid on Desktop */}
+        <div className="flex flex-col lg:grid lg:grid-cols-12 gap-10 md:gap-16">
+          
+          {/* Header Info - Mobile optimized order */}
+          <div className="lg:col-span-4 space-y-6 md:space-y-10 lg:pt-20">
+            <div className="space-y-3 md:space-y-4">
+               <div className="flex items-center space-x-3">
+                  <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.5em] text-rose-400">0{index + 1} / Case Study</span>
+                  <div className="h-px w-8 md:w-12 bg-rose-200"></div>
+               </div>
+               <h3 className="text-4xl md:text-8xl font-display font-bold text-gray-900 leading-[1.1] md:leading-[0.85] tracking-tight md:tracking-tighter">
+                 {project.title.split(' ')[0]} <br className="hidden md:block" />
+                 <span className="italic font-light text-rose-300">{project.title.split(' ').slice(1).join(' ')}</span>
+               </h3>
+               <p className="text-gray-400 text-[10px] md:text-xs font-bold uppercase tracking-widest italic">{project.category}</p>
+            </div>
+
+            {/* Description - Compact on mobile */}
+            <p className="text-base md:text-xl text-gray-500 font-light leading-relaxed max-w-md">
+              {project.description}
+            </p>
+          </div>
+
+          {/* Cinematic Slider - The Hero on all screens */}
+          <div className="lg:col-span-8 space-y-8 md:space-y-12">
+            
+            {/* Main Stage */}
+            <div className="relative aspect-[4/5] md:aspect-[16/10] rounded-[40px] md:rounded-[80px] overflow-hidden bg-gray-50 shadow-2xl shadow-rose-200/20">
+              
+              <div className={`w-full h-full transition-all duration-700 ease-out ${isTransitioning ? 'scale-105 blur-sm opacity-50' : 'scale-100 blur-0 opacity-100'}`}>
+                <img 
+                  src={images[activeIndex]} 
+                  alt={`${project.title} slide`} 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+
+              {/* Progress Overlay - Refined for mobile */}
+              <div className="absolute top-6 right-6 md:top-10 md:right-10 flex items-center space-x-3 bg-black/40 backdrop-blur-xl px-4 py-2 md:px-6 md:py-3 rounded-full border border-white/10">
+                 <span className="text-[9px] font-black text-white tracking-widest">0{activeIndex + 1}</span>
+                 <div className="w-8 md:w-12 h-[1px] bg-white/20">
+                    <div 
+                      className="h-full bg-rose-400 transition-all duration-500" 
+                      style={{ width: `${((activeIndex + 1) / images.length) * 100}%` }}
+                    ></div>
+                 </div>
+                 <span className="text-[9px] font-black text-white/40 tracking-widest">0{images.length}</span>
+              </div>
+
+              {/* Minimal Navigation Hooks */}
+              <div className="absolute inset-x-0 bottom-6 flex justify-center space-x-4 md:hidden">
+                 <button onClick={() => handleImageChange((activeIndex - 1 + images.length) % images.length)} className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+                 <button onClick={() => handleImageChange((activeIndex + 1) % images.length)} className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+              </div>
+            </div>
+
+            {/* Thumbnail Strip - Better touch targets for mobile */}
+            <div className="relative px-2">
+               <div 
+                 ref={thumbnailRef}
+                 className="flex space-x-4 md:space-x-6 overflow-x-auto pb-4 no-scrollbar snap-x snap-mandatory"
+               >
+                 {images.map((img, i) => (
+                   <button
+                    key={i}
+                    onClick={() => handleImageChange(i)}
+                    className={`flex-shrink-0 snap-center relative transition-all duration-500 ${
+                      activeIndex === i ? 'w-24 md:w-40 aspect-video opacity-100 scale-105' : 'w-16 md:w-24 aspect-square opacity-40'
+                    }`}
+                   >
+                     <div className={`w-full h-full rounded-2xl md:rounded-3xl overflow-hidden border-2 transition-all duration-500 ${
+                       activeIndex === i ? 'border-rose-400' : 'border-rose-50'
+                     }`}>
+                       <img src={img} className="w-full h-full object-cover" alt="Thumbnail" />
+                     </div>
+                   </button>
+                 ))}
+               </div>
+            </div>
+
+            {/* Sub-info: Tools & Outcome (Stacked on Mobile) */}
+            <div className="flex flex-col md:flex-row gap-6 md:items-center justify-between pt-6">
+                <div className="flex flex-wrap gap-2">
+                  {project.tools.map(tool => (
+                    <span key={tool} className="text-[8px] md:text-[9px] font-bold uppercase tracking-widest text-gray-400 bg-rose-50/50 px-3 py-1.5 md:px-4 md:py-2 rounded-full">
+                      {tool}
+                    </span>
+                  ))}
+                </div>
+                <div className="p-6 md:p-8 rounded-[30px] md:rounded-[40px] bg-rose-50/30 border border-rose-100/50 italic text-sm md:text-base text-rose-900 font-medium leading-relaxed max-w-sm">
+                  "{project.outcome}"
+                </div>
             </div>
           </div>
-        ))}
-      </div>
-    </div>
-  );
-};
-
-const ProjectExhibition: React.FC<{ project: Project; index: number }> = ({ project, index }) => {
-  const [activeView, setActiveView] = useState<'mosaic' | 'cinema'>('mosaic');
-
-  return (
-    <div className="relative py-40 border-b border-rose-50 last:border-0">
-      {/* Editorial Header */}
-      <div className="max-w-[1920px] mx-auto px-6 md:px-24 mb-24 grid lg:grid-cols-12 gap-10 items-end">
-        <div className="lg:col-span-8 space-y-8">
-           <div className="flex items-center space-x-4">
-             <span className="text-[12px] font-black uppercase tracking-[0.8em] text-rose-400">Genesis Series 0{index + 1}</span>
-             <div className="h-px flex-grow bg-rose-100"></div>
-           </div>
-           <h2 className="text-[10vw] md:text-[8vw] font-display font-bold text-gray-900 leading-[0.85] tracking-tighter">
-             {project.title.split(' ')[0]} <br />
-             <span className="italic font-light text-rose-300 holographic-text pb-4">{project.title.split(' ').slice(1).join(' ')}</span>
-           </h2>
         </div>
-        <div className="lg:col-span-4 pb-4">
-           <p className="text-xl text-gray-500 font-light leading-relaxed mb-8">
-             {project.description}
-           </p>
-           <div className="flex space-x-4">
-              <button 
-                onClick={() => setActiveView('mosaic')}
-                className={`px-8 py-3 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all ${activeView === 'mosaic' ? 'bg-gray-900 text-white' : 'bg-rose-50 text-rose-400'}`}
-              >
-                Mosaic Spread
-              </button>
-              <button 
-                onClick={() => setActiveView('cinema')}
-                className={`px-8 py-3 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all ${activeView === 'cinema' ? 'bg-gray-900 text-white' : 'bg-rose-50 text-rose-400'}`}
-              >
-                Cinema Ribbon
-              </button>
-           </div>
-        </div>
-      </div>
-
-      {/* Main Exhibition Area */}
-      {activeView === 'mosaic' ? (
-        <div className="max-w-[1920px] mx-auto px-6 md:px-24">
-           <div className="grid grid-cols-1 md:grid-cols-12 gap-10">
-              {/* Feature Large */}
-              <div className="md:col-span-7 h-[600px] md:h-[900px] rounded-[60px] md:rounded-[100px] overflow-hidden relative group shadow-2xl">
-                 <img src={project.imageUrl} className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-110" alt="Main" />
-                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60"></div>
-                 <div className="absolute bottom-12 left-12 space-y-4">
-                    <p className="text-white text-[10px] font-black uppercase tracking-[0.5em]">Masterpiece Concept</p>
-                    <h4 className="text-white text-4xl font-display italic">Visual Core Identity</h4>
-                 </div>
-              </div>
-
-              {/* Grid of Details */}
-              <div className="md:col-span-5 grid grid-cols-2 gap-10">
-                 {project.galleryImages?.slice(1, 5).map((img, i) => (
-                   <div key={i} className={`rounded-[40px] md:rounded-[60px] overflow-hidden shadow-xl transition-all duration-700 hover:scale-[1.03] ${i === 1 || i === 2 ? 'aspect-[3/4] mt-10' : 'aspect-square'}`}>
-                      <img src={img} className="w-full h-full object-cover" alt="Detail" />
-                   </div>
-                 ))}
-              </div>
-           </div>
-           
-           {/* Secondary Full-Width Asset */}
-           {project.galleryImages && project.galleryImages.length > 5 && (
-             <div className="mt-20 w-full h-[400px] md:h-[700px] rounded-[60px] md:rounded-[100px] overflow-hidden shadow-2xl relative group">
-                <img src={project.galleryImages[5]} className="w-full h-full object-cover transition-all duration-[3s] group-hover:scale-110" alt="Wide" />
-                <div className="absolute inset-0 flex items-center justify-center bg-black/20 opacity-0 group-hover:opacity-100 transition-all duration-700">
-                   <div className="bg-white/10 backdrop-blur-3xl border border-white/20 p-10 rounded-full">
-                      <p className="text-white text-xs font-black uppercase tracking-[0.8em]">Deep Context View</p>
-                   </div>
-                </div>
-             </div>
-           )}
-        </div>
-      ) : (
-        <div className="w-full animate-[revealUp_1s_cubic-bezier(0.19,1,0.22,1)]">
-           <ExhibitionRibbon images={project.galleryImages || [project.imageUrl]} />
-           <div className="max-w-4xl mx-auto px-6 text-center mt-10">
-              <p className="text-gray-400 italic text-lg leading-relaxed">
-                "We believe that the best way to showcase a brand is through a diverse ecosystem of touchpoints. Every asset tells a micro-story."
-              </p>
-           </div>
-        </div>
-      )}
-
-      {/* Case Metrics Card */}
-      <div className="max-w-[1920px] mx-auto px-6 md:px-24 mt-20">
-         <div className="p-12 md:p-16 rounded-[60px] bg-rose-50/50 border border-rose-100/50 backdrop-blur-xl flex flex-col md:flex-row justify-between items-center gap-12">
-            <div className="flex flex-wrap gap-4 justify-center md:justify-start">
-               {project.tools.map(tool => (
-                 <span key={tool} className="px-6 py-2 rounded-full bg-white text-[10px] font-black text-rose-400 uppercase tracking-widest border border-rose-100">
-                   {tool}
-                 </span>
-               ))}
-            </div>
-            <div className="text-center md:text-right">
-               <p className="text-xs font-black text-gray-400 uppercase tracking-widest mb-2">Project Outcome</p>
-               <p className="text-xl text-rose-900 font-medium italic leading-relaxed max-w-md">
-                 {project.outcome}
-               </p>
-            </div>
-            <button className="flex-shrink-0 w-20 h-20 rounded-full bg-gray-900 flex items-center justify-center hover:bg-rose-500 hover:scale-110 transition-all shadow-xl active:scale-95 group">
-               <svg className="text-white transform group-hover:rotate-45 transition-transform" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-            </button>
-         </div>
       </div>
     </div>
   );
@@ -165,47 +143,44 @@ const ProjectExhibition: React.FC<{ project: Project; index: number }> = ({ proj
 
 const Projects: React.FC = () => {
   return (
-    <section id="project" className="relative bg-white pt-64 pb-32 overflow-hidden">
-      {/* Background Ambience */}
-      <div className="absolute top-0 left-0 w-full h-[1500px] bg-[radial-gradient(circle_at_0%_0%,rgba(255,192,203,0.15),transparent_60%)] pointer-events-none"></div>
-      <div className="absolute top-[30%] right-[-10%] w-[1200px] h-[1200px] bg-indigo-50/10 rounded-full blur-[200px] pointer-events-none"></div>
+    <section id="project" className="relative bg-white pt-24 md:pt-64 pb-20 md:pb-32 overflow-hidden">
+      {/* Ambient background decor */}
+      <div className="absolute top-0 left-0 w-full h-[1500px] bg-[radial-gradient(circle_at_20%_10%,rgba(255,192,203,0.1),transparent_60%)] pointer-events-none"></div>
 
       <div className="relative z-10">
-        {/* Cinematic Section Intro */}
-        <div className="max-w-[1920px] mx-auto px-6 md:px-24 mb-64 flex flex-col items-center">
-          <div className="relative mb-20">
-             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] aspect-square bg-rose-50 rounded-full blur-3xl opacity-50 -z-10 animate-pulse"></div>
-             <p className="text-rose-400 font-black uppercase tracking-[1.5em] text-[10px] md:text-[12px] mb-12 text-center">Visual Catalog • 2025 Edition</p>
-             <h2 className="text-[14vw] md:text-[12vw] font-display font-black tracking-tighter text-gray-900 leading-[0.7] text-center select-none">
-               The <br />
-               <span className="italic holographic-text font-black">Collection.</span>
-             </h2>
+        {/* Section Header - Mobile optimized */}
+        <div className="max-w-[1920px] mx-auto px-6 md:px-24 mb-16 md:mb-40">
+          <div className="inline-block relative">
+            <h2 className="text-[14vw] md:text-[10vw] font-display font-black tracking-tighter text-gray-900 leading-[0.8] mb-4">
+              Featured <br />
+              <span className="holographic-text italic font-black">Archive.</span>
+            </h2>
+            <div className="w-12 md:w-24 h-1.5 md:h-2 bg-rose-400 mt-6"></div>
           </div>
-          <div className="w-px h-64 bg-gradient-to-b from-rose-300 to-transparent"></div>
+          <p className="text-lg md:text-2xl text-gray-400 font-light mt-8 max-w-2xl italic leading-relaxed">
+            A curated selection of visual identities and narratives built with strategic purpose.
+          </p>
         </div>
 
-        {/* Dynamic Project Feed */}
-        <div className="space-y-[15vh]">
+        {/* Project Feed */}
+        <div className="space-y-12 md:space-y-24">
           {PROJECTS.map((project, idx) => (
-            <ProjectExhibition key={project.id} project={project} index={idx} />
+            <ProjectSlider key={project.id} project={project} index={idx} />
           ))}
         </div>
 
-        {/* Global CTA Hook */}
-        <div className="mt-80 max-w-[1920px] mx-auto px-6 md:px-24">
-           <div className="relative py-40 bg-gray-900 rounded-[100px] overflow-hidden text-center group">
-              <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10"></div>
-              <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-rose-500/30 via-transparent to-indigo-500/20"></div>
-              
-              <div className="relative z-10 space-y-12">
-                 <h4 className="text-6xl md:text-9xl font-display font-bold text-white leading-none tracking-tighter">
-                   Your Brand <br />
-                   <span className="italic text-rose-400 group-hover:holographic-text transition-all duration-700">Awaits Perfection.</span>
+        {/* Dynamic CTA Footer */}
+        <div className="mt-32 md:mt-64 px-6 md:px-24">
+           <div className="relative py-20 md:py-40 bg-gray-900 rounded-[50px] md:rounded-[100px] overflow-hidden text-center">
+              <div className="absolute inset-0 opacity-10 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
+              <div className="relative z-10 space-y-8 md:space-y-12">
+                 <h4 className="text-4xl md:text-[80px] font-display font-bold text-white leading-tight tracking-tighter px-4">
+                   Let's Create <br />
+                   <span className="italic text-rose-400">Something Iconic.</span>
                  </h4>
-                 <div className="flex flex-col md:flex-row items-center justify-center gap-8">
-                    <p className="text-xl text-gray-400 font-light tracking-[0.4em] uppercase">Now Booking for 2025</p>
-                    <div className="h-px w-20 bg-rose-500 hidden md:block"></div>
-                    <a href="#contact" className="text-white font-bold border-b-2 border-rose-500 pb-2 hover:text-rose-400 transition-colors uppercase tracking-widest text-sm">Start the Project</a>
+                 <div className="flex flex-col items-center space-y-6">
+                    <a href="#contact" className="px-10 py-5 bg-rose-500 rounded-full text-white text-[10px] font-black uppercase tracking-[0.4em] hover:bg-rose-600 transition-all shadow-xl shadow-rose-500/20">Start a Project</a>
+                    <p className="text-[10px] text-gray-500 font-bold uppercase tracking-[0.3em]">Currently accepting Q3 commissions</p>
                  </div>
               </div>
            </div>
@@ -215,10 +190,6 @@ const Projects: React.FC = () => {
       <style>{`
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        @keyframes revealUp {
-          from { opacity: 0; transform: translateY(40px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
       `}</style>
     </section>
   );
