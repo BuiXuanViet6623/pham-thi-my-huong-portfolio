@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pham Thi My Huong | Graphic Designer Portfolio</title>
+    <title>Pham Thi My Huong | Visual Designer & Brand Strategist</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -47,13 +47,6 @@
             100% { background-position: 0% 50%; }
         }
 
-        .iridescent-blob {
-            background: radial-gradient(circle at center, var(--rose-light), transparent 70%);
-            filter: blur(100px);
-            opacity: 0.3;
-            mix-blend-mode: multiply;
-        }
-
         .grain-overlay::before {
             content: "";
             position: fixed;
@@ -65,57 +58,18 @@
         }
 
         .cursor-dot {
-            width: 8px;
-            height: 8px;
+            width: 8px; height: 8px;
             background-color: var(--rose-primary);
             border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 10000;
+            position: fixed; pointer-events: none; z-index: 10000;
         }
         .cursor-outline {
-            width: 40px;
-            height: 40px;
+            width: 40px; height: 40px;
             border: 1px solid rgba(232, 122, 144, 0.4);
             border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 9999;
+            position: fixed; pointer-events: none; z-index: 9999;
             transition: transform 0.15s cubic-bezier(0.17, 0.67, 0.83, 0.67);
         }
-
-        .floating {
-            animation: floating 8s ease-in-out infinite;
-        }
-        @keyframes floating {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(0, -30px); }
-        }
-
-        .animate-float {
-            animation: float-badge 6s ease-in-out infinite;
-        }
-        @keyframes float-badge {
-            0%, 100% { transform: translateY(0) rotate(0); }
-            50% { transform: translateY(-20px) rotate(2deg); }
-        }
-
-        .reveal-container {
-            overflow: hidden;
-        }
-        .reveal-item {
-            display: inline-block;
-            transform: translateY(110%);
-            animation: revealUp 1s cubic-bezier(0.19, 1, 0.22, 1) forwards;
-        }
-        @keyframes revealUp {
-            to { transform: translateY(0); }
-        }
-
-        .animate-spin-slow {
-            animation: spin 60s linear infinite;
-        }
-        @keyframes spin { from { transform: translate(-50%, -50%) rotate(0deg); } to { transform: translate(-50%, -50%) rotate(360deg); } }
 
         ::-webkit-scrollbar { width: 5px; }
         ::-webkit-scrollbar-track { background: transparent; }
@@ -139,7 +93,6 @@
     
     <div id="root"></div>
 
-    <!-- Added Vite entry point script -->
     <script type="module" src="/index.tsx"></script>
 
     <script>

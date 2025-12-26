@@ -11,7 +11,7 @@ const Navbar: React.FC = () => {
     { name: 'ABOUT', id: 'about' },
     { name: 'SKILLS', id: 'skills' },
     { name: 'EXPERIENCE', id: 'experience' },
-    { name: 'PROJECT', id: 'project' },
+    { name: 'PROJECTS', id: 'project' },
     { name: 'CONTACT', id: 'contact' }
   ];
 
@@ -62,7 +62,6 @@ const Navbar: React.FC = () => {
         const element = document.getElementById(sectionId);
         if (element) {
           const rect = element.getBoundingClientRect();
-          // Adjust detection logic to be more sensitive to the top of the viewport
           if (rect.top <= 150) {
             currentSection = sectionId;
           }

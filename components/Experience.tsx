@@ -10,19 +10,18 @@ const Experience: React.FC = () => {
           
           <div className="lg:col-span-5 space-y-12">
             <div className="space-y-6">
-              <p className="text-rose-400 font-bold uppercase tracking-[0.6em] text-[10px]">Career Narrative</p>
+              <p className="text-rose-400 font-bold uppercase tracking-[0.6em] text-[10px]">Career Evolution</p>
               <h2 className="text-7xl md:text-9xl font-display font-medium tracking-tighter leading-[0.9]">
-                Professional <br /><span className="italic font-light">Journey.</span>
+                Professional <br /><span className="italic font-light">Experience.</span>
               </h2>
             </div>
             <div className="relative w-full aspect-square rounded-[60px] overflow-hidden shadow-2xl group">
-               <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1200" alt="Workspace" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
+               <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=1200" alt="Studio Environment" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
                <div className="absolute inset-0 bg-rose-900/10 transition-opacity group-hover:opacity-0"></div>
             </div>
           </div>
           
           <div className="lg:col-span-7 space-y-20 relative">
-            {/* The Vertical Timeline Line */}
             <div className="absolute left-[33px] md:left-[33px] top-10 bottom-10 w-px bg-rose-100 hidden md:block"></div>
 
             {EXPERIENCES.map((item, idx) => (
@@ -50,7 +49,7 @@ const Experience: React.FC = () => {
                       </p>
 
                       <div className="grid grid-cols-2 md:grid-cols-3 gap-6 pt-4">
-                         {['Market Research', 'Design Systems', 'Client Collaboration'].map(skill => (
+                         {['Design Systems', 'Strategic Thinking', 'Brand Narratives'].map(skill => (
                            <div key={skill} className="flex items-center space-x-3 group/skill">
                               <div className="w-1.5 h-1.5 rounded-full bg-rose-200 group-hover/skill:bg-rose-400 group-hover/skill:scale-150 transition-all"></div>
                               <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400 group-hover/skill:text-gray-600">{skill}</span>
