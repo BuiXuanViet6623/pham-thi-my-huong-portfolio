@@ -3,12 +3,14 @@ import React from 'react';
 
 const Skills: React.FC = () => {
   const tools = [
-    { name: 'Photoshop', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/photoshop/photoshop-original.svg' },
-    { name: 'Illustrator', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/illustrator/illustrator-plain.svg' },
-    { name: 'After Effects', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/aftereffects/aftereffects-original.svg' },
-    { name: 'Figma', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg' },
-    { name: 'InDesign', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/indesign/indesign-original.svg' },
-    { name: 'Premiere', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/premierepro/premierepro-original.svg' }
+    { name: 'Photoshop', icon: 'https://cdn.simpleicons.org/adobephotoshop/31A8FF' },
+    { name: 'Illustrator', icon: 'https://cdn.simpleicons.org/adobeillustrator/FF9A00' },
+    { name: 'InDesign', icon: 'https://cdn.simpleicons.org/adobeindesign/FF3366' },
+    { name: 'After Effects', icon: 'https://cdn.simpleicons.org/adobeaftereffects/9999FF' },
+    { name: 'Premiere', icon: 'https://cdn.simpleicons.org/adobepremierepro/9999FF' },
+    { name: 'Figma', icon: 'https://cdn.simpleicons.org/figma/F24E1E' },
+    { name: 'Canva', icon: 'https://cdn.simpleicons.org/canva/00C4CC' },
+    { name: 'CapCut', icon: 'https://cdn.simpleicons.org/capcut/000000' }
   ];
 
   const coreExpertise = [
@@ -42,17 +44,21 @@ const Skills: React.FC = () => {
         <div className="grid lg:grid-cols-2 gap-16">
           <div className="bg-white p-12 md:p-16 rounded-[60px] md:rounded-[80px] shadow-2xl shadow-rose-100/20 border border-white">
             <h3 className="text-3xl md:text-4xl font-display font-bold text-gray-900 mb-16">Technical <span className="text-rose-400">Stack</span></h3>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-10 md:gap-12">
+            <div className="grid grid-cols-3 md:grid-cols-4 gap-8 md:gap-10">
               {tools.map((tool) => (
                 <div key={tool.name} className="flex flex-col items-center group cursor-default">
-                  <div className="w-20 h-20 md:w-24 md:h-24 rounded-3xl bg-gray-50 flex items-center justify-center mb-6 border border-rose-50 hover:border-rose-200 hover:bg-white hover:shadow-2xl hover:scale-110 transition-all duration-500 p-6">
+                  <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl md:rounded-3xl bg-gray-50 flex items-center justify-center mb-4 border border-rose-50 hover:border-rose-300 hover:bg-white hover:shadow-2xl hover:scale-110 transition-all duration-500 p-4 md:p-5 overflow-hidden">
                     <img 
                       src={tool.icon} 
                       alt={tool.name} 
-                      className="w-full h-full object-contain filter-none" 
+                      className="w-full h-full object-contain opacity-80 group-hover:opacity-100 transition-opacity"
+                      onError={(e) => {
+                        // Fallback nếu link icon lỗi
+                        (e.target as HTMLImageElement).src = `https://via.placeholder.com/100/FFF9FA/E87A90?text=${tool.name.charAt(0)}`;
+                      }}
                     />
                   </div>
-                  <p className="text-[10px] md:text-[11px] font-bold uppercase tracking-widest text-gray-400 group-hover:text-rose-500 transition-colors">{tool.name}</p>
+                  <p className="text-[8px] md:text-[9px] font-black uppercase tracking-widest text-gray-300 group-hover:text-rose-500 transition-colors text-center">{tool.name}</p>
                 </div>
               ))}
             </div>
