@@ -37,7 +37,7 @@ const Hero: React.FC = () => {
 
           <div className="relative group">
             {/* Background floating text for depth */}
-            <span className="absolute -top-16 -left-8 text-[12vw] font-display font-black text-rose-50/80 select-none pointer-events-none -z-10 group-hover:translate-x-4 transition-transform duration-1000">CREATIVE</span>
+            <span className="absolute -top-16 -left-8 text-[12vw] font-display font-black text-rose-50/80 select-none pointer-events-none -z-10 group-hover:translate-x-4 transition-transform duration-1000 uppercase">CREATIVE</span>
             
             <div className="space-y-4">
               <div className="reveal-container overflow-visible">
@@ -65,7 +65,6 @@ const Hero: React.FC = () => {
               </p>
             </div>
             
-            {/* CTA Buttons in a single horizontal row */}
             <div className="flex flex-row items-center gap-4 md:gap-6 reveal-container" style={{animationDelay: '0.6s'}}>
                <div className="reveal-item">
                  <a href="#" className="group relative px-7 md:px-10 py-5 md:py-6 rounded-[22px] md:rounded-[28px] overflow-hidden inline-flex items-center space-x-3 md:space-x-4 bg-rose-500 transition-all hover:bg-rose-600 shadow-2xl shadow-rose-200/50 active:scale-95 whitespace-nowrap">
@@ -96,11 +95,13 @@ const Hero: React.FC = () => {
               <div className="absolute -inset-10 bg-gradient-to-tr from-rose-200/30 via-transparent to-indigo-100/30 rounded-full blur-[100px] opacity-60 animate-spin-slow"></div>
 
               {/* Sophisticated Image Mask */}
-              <div className="relative w-full h-full rounded-[140px] sm:rounded-[200px] overflow-hidden shadow-[0_100px_160px_-40px_rgba(232,122,144,0.4)] z-20 group border-[12px] border-white/80 backdrop-blur-sm">
+              <div className="relative w-full h-full rounded-[140px] sm:rounded-[200px] overflow-hidden shadow-[0_100px_160px_-40px_rgba(232,122,144,0.4)] z-20 group border-[12px] border-white/80 backdrop-blur-sm bg-gray-100">
                  <img 
-                   src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=1200" 
-                   className="w-full h-full object-cover transition-all duration-[3s] group-hover:scale-110 ease-out grayscale group-hover:grayscale-0" 
+                   src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1200&auto=format&fit=crop" 
+                   className="w-full h-full object-cover transition-all duration-[3s] group-hover:scale-110 ease-out grayscale-[0.3] group-hover:grayscale-0" 
                    alt="Pham Thi My Huong Portrait" 
+                   onLoad={(e) => (e.target as HTMLImageElement).style.opacity = '1'}
+                   style={{ opacity: 0, transition: 'opacity 1s ease' }}
                  />
                  
                  {/* Inner Glass Vignette */}
@@ -110,7 +111,7 @@ const Hero: React.FC = () => {
                  <div className="absolute inset-0 flex flex-col justify-end p-16 opacity-0 group-hover:opacity-100 transition-all duration-700 transform translate-y-10 group-hover:translate-y-0">
                     <div className="bg-white/10 backdrop-blur-xl border border-white/20 p-8 rounded-[40px]">
                       <p className="text-white text-[10px] font-black uppercase tracking-[0.5em] mb-2">Designer Identity</p>
-                      <p className="text-white text-2xl font-display italic">Master Series 2025</p>
+                      <p className="text-white text-2xl font-display italic">Excellence 2025</p>
                     </div>
                  </div>
               </div>
@@ -123,7 +124,7 @@ const Hero: React.FC = () => {
                       <span className="text-rose-500 font-bold text-[9px] tracking-tighter">PH.</span>
                    </div>
                  </div>
-                 <p className="text-[10px] font-black uppercase tracking-widest text-rose-900/60 text-center leading-tight">Concept<br/>Specialist</p>
+                 <p className="text-[10px] font-black uppercase tracking-widest text-rose-900/60 text-center leading-tight">Creative<br/>Strategist</p>
               </div>
 
               <div className="absolute -bottom-8 -left-16 w-64 h-28 bg-gray-900/95 backdrop-blur-2xl rounded-[40px] shadow-2xl z-30 flex items-center px-8 space-x-6 border border-white/5 animate-float" style={{ animationDelay: '1.5s' }}>
@@ -132,13 +133,8 @@ const Hero: React.FC = () => {
                  </div>
                  <div className="flex flex-col">
                     <span className="text-white text-[11px] font-bold uppercase tracking-widest">Premium Output</span>
-                    <span className="text-rose-200/40 text-[9px] uppercase tracking-widest font-black">2025 Standard</span>
+                    <span className="text-rose-200/40 text-[9px] uppercase tracking-widest font-black">Design Standards</span>
                  </div>
-              </div>
-
-              {/* Dynamic Aura Text */}
-              <div className="absolute top-1/2 -left-32 transform -rotate-90 origin-center hidden xl:block opacity-20">
-                 <span className="text-[14px] font-black uppercase tracking-[2em] text-rose-300">CURATED VISUALS</span>
               </div>
            </div>
         </div>

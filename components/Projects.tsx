@@ -1,111 +1,140 @@
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import { PROJECTS } from '../constants';
 import { Project } from '../types';
 
-const ProjectSlider: React.FC<{ project: Project; index: number }> = ({ project, index }) => {
+const ProjectCard: React.FC<{ project: Project; index: number }> = ({ project, index }) => {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [isChanging, setIsChanging] = useState(false);
   const images = project.galleryImages || [project.imageUrl];
-  const thumbnailRef = useRef<HTMLDivElement>(null);
-  const isEven = index % 2 === 0;
 
-  const handleImageChange = (newIndex: number) => {
-    if (newIndex === activeIndex || isTransitioning) return;
-    setIsTransitioning(true);
-    setTimeout(() => {
-      setActiveIndex(newIndex);
-      setIsTransitioning(false);
-    }, 500);
+  const handleImageChange = (idx: number) => {
+    if (idx === activeIndex || isChanging) return;
+    setIsChanging(true);
+    setActiveIndex(idx);
+    setTimeout(() => setIsChanging(false), 600);
   };
 
-  useEffect(() => {
-    if (thumbnailRef.current) {
-      const activeThumb = thumbnailRef.current.children[activeIndex] as HTMLElement;
-      if (activeThumb) {
-        thumbnailRef.current.scrollTo({
-          left: activeThumb.offsetLeft - thumbnailRef.current.offsetWidth / 2 + activeThumb.offsetWidth / 2,
-          behavior: 'smooth'
-        });
-      }
-    }
-  }, [activeIndex]);
+  // Logic to split title for color effect - taking the last word as the accent
+  const titleWords = project.title.split(' ');
+  const lastWord = titleWords.pop();
+  const mainTitle = titleWords.join(' ');
 
   return (
-    <div className="relative w-full py-16 md:py-32 mb-20 md:mb-40 border-b border-rose-50 last:border-0 group/project">
-      {/* Background Numbering */}
-      <div className={`absolute top-0 pointer-events-none select-none z-0 hidden lg:block ${isEven ? 'left-10' : 'right-10'}`}>
-        <span className="text-[20vw] font-display font-black text-rose-50 opacity-30 italic leading-none">
-          0{index + 1}
-        </span>
+    <div className="relative w-full py-24 md:py-48 border-b border-rose-50/30 last:border-0 bg-white group/card overflow-hidden">
+      {/* Background Project Number (Watermark) - Subtle and deep */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[35vw] font-display font-black text-rose-50/10 select-none pointer-events-none -z-0 italic transition-transform duration-[2s] group-hover/card:scale-110 group-hover/card:rotate-3 opacity-50">
+        0{index + 1}
       </div>
 
-      <div className="max-w-[1920px] mx-auto px-6 md:px-16 lg:px-24 relative z-10">
-        <div className={`flex flex-col lg:flex-row ${isEven ? '' : 'lg:flex-row-reverse'} gap-10 md:gap-24 items-center`}>
+      <div className="max-w-[1700px] mx-auto px-6 md:px-12 relative z-10">
+        <div className="grid lg:grid-cols-12 gap-12 lg:gap-20 items-center">
           
-          {/* Information Side */}
-          <div className="lg:w-1/3 space-y-8 md:space-y-12">
-            <div className="space-y-4 md:space-y-6">
-               <div className="flex items-center space-x-3">
-                  <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.5em] text-rose-400">0{index + 1} • Project Case Study</span>
-                  <div className="h-px w-8 md:w-12 bg-rose-200"></div>
-               </div>
-               <h3 className="text-5xl md:text-8xl font-display font-bold text-gray-900 leading-[1] tracking-tighter">
-                 {project.title.split(' ')[0]} <br className="hidden md:block" />
-                 <span className="italic font-light text-rose-300">{project.title.split(' ').slice(1).join(' ')}</span>
-               </h3>
-               <p className="text-gray-400 text-[10px] md:text-xs font-bold uppercase tracking-widest italic">{project.category}</p>
-            </div>
-
-            <p className="text-base md:text-xl text-gray-500 font-light leading-relaxed">
-              {project.description}
-            </p>
-
-            <div className="p-8 rounded-[40px] bg-rose-50/30 border border-rose-100/50 italic text-sm md:text-base text-rose-900 font-medium leading-relaxed">
-              "{project.outcome}"
-            </div>
-          </div>
-
-          {/* Media Side */}
-          <div className="lg:w-2/3 space-y-8 md:space-y-12">
-            <div className="relative aspect-[4/5] md:aspect-[16/10] rounded-[40px] md:rounded-[80px] overflow-hidden bg-gray-50 shadow-2xl shadow-rose-200/20">
-              <div className={`w-full h-full transition-all duration-700 ease-out ${isTransitioning ? 'scale-105 blur-sm opacity-50' : 'scale-100 blur-0 opacity-100'}`}>
-                <img src={images[activeIndex]} alt={`${project.title} visualization`} className="w-full h-full object-cover" />
+          {/* Left Side: Editorial Typography */}
+          <div className="lg:col-span-5 space-y-10 order-2 lg:order-1">
+            <div className="space-y-6">
+              <div className="flex items-center space-x-4">
+                <span className="text-[10px] font-black text-rose-400 uppercase tracking-[0.8em]">Archive_2025</span>
+                <div className="h-[1px] w-12 bg-rose-200"></div>
               </div>
               
-              {/* Counter Overlay */}
-              <div className="absolute top-6 right-6 md:top-10 md:right-10 flex items-center space-x-3 bg-black/40 backdrop-blur-xl px-4 py-2 md:px-6 md:py-3 rounded-full border border-white/10">
-                 <span className="text-[9px] font-black text-white tracking-widest">0{activeIndex + 1}</span>
-                 <div className="w-8 md:w-12 h-[1px] bg-white/20">
-                    <div className="h-full bg-rose-400 transition-all duration-500" style={{ width: `${((activeIndex + 1) / images.length) * 100}%` }}></div>
-                 </div>
-                 <span className="text-[9px] font-black text-white/40 tracking-widest">0{images.length}</span>
-              </div>
+              <h3 className="text-5xl md:text-7xl lg:text-[6.5vw] font-display font-medium text-gray-900 leading-[0.9] tracking-tighter">
+                {mainTitle} <br />
+                <span className="holographic-text italic font-black pb-2 block mt-3 drop-shadow-sm">{lastWord}.</span>
+              </h3>
             </div>
 
-            {/* Gallery Thumbnails */}
-            <div className="flex space-x-4 md:space-x-6 overflow-x-auto pb-4 no-scrollbar snap-x snap-mandatory">
-              {images.map((img, i) => (
-                <button
-                  key={i}
-                  onClick={() => handleImageChange(i)}
-                  className={`flex-shrink-0 snap-center relative transition-all duration-500 ${activeIndex === i ? 'w-24 md:w-40 aspect-video' : 'w-16 md:w-24 aspect-square opacity-40'}`}
-                >
-                  <div className={`w-full h-full rounded-2xl md:rounded-3xl overflow-hidden border-2 transition-all duration-500 ${activeIndex === i ? 'border-rose-400' : 'border-rose-50'}`}>
-                    <img src={img} className="w-full h-full object-cover" alt="Thumbnail" />
-                  </div>
-                </button>
-              ))}
-            </div>
-            
-            <div className="flex flex-wrap gap-2">
-              {project.tools.map(tool => (
-                <span key={tool} className="text-[8px] md:text-[9px] font-bold uppercase tracking-widest text-gray-400 bg-rose-50/50 px-3 py-1.5 md:px-4 md:py-2 rounded-full">
-                  {tool}
-                </span>
-              ))}
+            <div className="max-w-md space-y-10">
+              <div className="relative pl-6 border-l-[1px] border-rose-200">
+                <p className="text-lg md:text-xl text-gray-400 font-light leading-relaxed italic">
+                  "{project.description}"
+                </p>
+              </div>
+
+              {/* Minimal Stats Grid */}
+              <div className="grid grid-cols-2 gap-6 py-8 border-y border-rose-50">
+                <div className="space-y-1">
+                  <p className="text-[9px] font-black uppercase tracking-widest text-rose-300">Strategy</p>
+                  <p className="text-xs font-bold text-gray-700 tracking-tight uppercase">{project.category}</p>
+                </div>
+                <div className="space-y-1">
+                  <p className="text-[9px] font-black uppercase tracking-widest text-rose-300">Leadership</p>
+                  <p className="text-xs font-bold text-gray-700 tracking-tight uppercase">{project.role}</p>
+                </div>
+              </div>
+
+              {/* Tools Tags */}
+              <div className="flex flex-wrap gap-2 pt-2">
+                {project.tools.map(tool => (
+                  <span key={tool} className="text-[7px] font-bold uppercase tracking-[0.2em] px-3 py-1 bg-white text-gray-400 rounded-full border border-gray-100 group-hover/card:border-rose-200 transition-all">
+                    {tool}
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
+
+          {/* Right Side: Visual Showcase */}
+          <div className="lg:col-span-7 space-y-8 order-1 lg:order-2">
+            <div className="relative group/stage">
+              {/* Main Image Viewport - Sleek rounded corners */}
+              <div className="relative aspect-[16/10] overflow-hidden rounded-[32px] md:rounded-[60px] bg-gray-50 shadow-[0_40px_80px_-15px_rgba(232,122,144,0.15)] ring-1 ring-black/5">
+                <div 
+                  key={activeIndex}
+                  className={`w-full h-full transition-all duration-1000 cubic-bezier(0.23, 1, 0.32, 1) ${
+                    isChanging ? 'scale-110 blur-xl opacity-0' : 'scale-100 blur-0 opacity-100'
+                  }`}
+                >
+                  <img 
+                    src={images[activeIndex]} 
+                    className="w-full h-full object-cover" 
+                    alt={project.title} 
+                  />
+                </div>
+
+                {/* Floating Navigation Controls */}
+                <div className="absolute inset-x-6 bottom-6 flex justify-between items-center pointer-events-none">
+                  <div className="flex gap-2 pointer-events-auto">
+                    <button 
+                      onClick={() => handleImageChange((activeIndex - 1 + images.length) % images.length)}
+                      className="w-12 h-12 flex items-center justify-center text-white bg-black/20 backdrop-blur-xl border border-white/20 rounded-full hover:bg-rose-500 transition-all active:scale-90"
+                    >
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+                    </button>
+                    <button 
+                      onClick={() => handleImageChange((activeIndex + 1) % images.length)}
+                      className="w-12 h-12 flex items-center justify-center text-white bg-black/20 backdrop-blur-xl border border-white/20 rounded-full hover:bg-rose-500 transition-all active:scale-90"
+                    >
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M9 18l6-6-6-6"/></svg>
+                    </button>
+                  </div>
+                  
+                  <div className="px-5 py-2.5 bg-black/10 backdrop-blur-xl border border-white/20 rounded-full text-[9px] font-black text-white uppercase tracking-widest">
+                    P_{activeIndex + 1} / 0{images.length}
+                  </div>
+                </div>
+              </div>
+
+              {/* THUMBNAIL GALLERY - Smaller & more elegant */}
+              <div className="mt-8 flex flex-wrap justify-center lg:justify-start gap-3 md:gap-4">
+                {images.map((img, i) => (
+                  <button
+                    key={i}
+                    onClick={() => handleImageChange(i)}
+                    className={`relative w-14 h-14 md:w-16 md:h-16 rounded-xl md:rounded-2xl overflow-hidden transition-all duration-500 ring-offset-2 ${
+                      activeIndex === i 
+                      ? 'ring-2 ring-rose-400 scale-110 z-10 shadow-lg' 
+                      : 'opacity-40 grayscale hover:opacity-100 hover:grayscale-0 hover:scale-105'
+                    }`}
+                  >
+                    <img src={img} className="w-full h-full object-cover" alt="thumb" />
+                    <div className={`absolute inset-0 bg-rose-500/10 transition-opacity ${activeIndex === i ? 'opacity-100' : 'opacity-0'}`}></div>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
@@ -114,34 +143,35 @@ const ProjectSlider: React.FC<{ project: Project; index: number }> = ({ project,
 
 const Projects: React.FC = () => {
   return (
-    <section id="project" className="relative bg-white pt-24 md:pt-64 pb-20 md:pb-32 overflow-hidden">
-      <div className="absolute top-0 left-0 w-full h-[1500px] bg-[radial-gradient(circle_at_20%_10%,rgba(255,192,203,0.1),transparent_60%)] pointer-events-none"></div>
-
-      <div className="relative z-10">
-        <div className="max-w-[1920px] mx-auto px-6 md:px-24 mb-16 md:mb-40">
-          <div className="inline-block relative">
-            <h2 className="text-[14vw] md:text-[10vw] font-display font-black tracking-tighter text-gray-900 leading-[0.8] mb-4">
-              Featured <br />
-              <span className="holographic-text italic font-black">Projects.</span>
-            </h2>
-            <div className="w-12 md:w-24 h-1.5 md:h-2 bg-rose-400 mt-6"></div>
+    <section id="project" className="relative bg-white pt-40 pb-20 overflow-hidden">
+      {/* Editorial Title Section */}
+      <div className="max-w-[1700px] mx-auto px-6 md:px-12 mb-20 md:mb-32 relative z-10">
+        <div className="flex flex-col space-y-6 md:space-y-10">
+          <div className="flex items-center space-x-6">
+            <div className="w-16 h-[2.5px] bg-rose-400"></div>
+            <p className="text-[12px] font-black uppercase tracking-[1em] text-rose-400">Visual Archives</p>
           </div>
-          <p className="text-lg md:text-2xl text-gray-400 font-light mt-8 max-w-2xl italic leading-relaxed">
-            A curated portfolio of high-impact visual identities and sophisticated brand narratives.
-          </p>
-        </div>
-
-        <div className="space-y-12 md:space-y-24">
-          {PROJECTS.map((project, idx) => (
-            <ProjectSlider key={project.id} project={project} index={idx} />
-          ))}
+          <h2 className="text-6xl md:text-[9vw] font-display font-medium tracking-tighter text-gray-900 leading-[0.85]">
+            Curated <br />
+            <span className="italic font-light holographic-text pl-8 md:pl-20">Works.</span>
+          </h2>
         </div>
       </div>
 
-      <style>{`
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-      `}</style>
+      {/* Projects List */}
+      <div className="relative z-10">
+        {PROJECTS.map((project, idx) => (
+          <ProjectCard key={project.id} project={project} index={idx} />
+        ))}
+      </div>
+
+      {/* Footer CTA */}
+      <div className="mt-24 md:mt-40 text-center pb-20">
+         <a href="#" className="group inline-flex flex-col items-center">
+            <span className="text-[10px] font-black uppercase tracking-[1.2em] text-gray-300 group-hover:text-rose-500 transition-colors mb-4">Explore More Projects</span>
+            <div className="w-16 h-px bg-gray-100 group-hover:w-40 group-hover:bg-rose-500 transition-all duration-700"></div>
+         </a>
+      </div>
     </section>
   );
 };

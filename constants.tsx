@@ -11,47 +11,54 @@ export const COLORS = {
 
 export const PROJECTS: Project[] = [
   {
-    id: 'thanh-tra',
-    title: 'Thanh Tra Tea Ecosystem',
-    category: 'Brand Strategy & Identity',
-    description: 'A complete architectural visual system for a premium botanical tea brand. Developing a cohesive narrative between traditional Vietnamese culture and contemporary minimalist aesthetics.',
-    role: 'Lead Visual Strategist',
-    outcome: 'Synthesized heritage motifs with modern design systems, increasing brand perception by 40% for the 2025 "At Ty" Lunar New Year collection.',
-    tools: ['Adobe Illustrator', 'Photoshop', 'Dimension'],
-    imageUrl: 'https://images.unsplash.com/photo-1544787210-2827d344b124?auto=format&fit=crop&q=80&w=1200',
+    id: 'thanh-tra-tea',
+    title: 'Thanh Tra Tea Identity',
+    category: 'Brand Architecture',
+    description: 'A contemporary visual system for premium botanical tea, merging Vietnamese cultural symbols with modern minimalist geometry.',
+    role: 'Creative Lead',
+    outcome: 'Increased luxury market penetration by 45% through high-end packaging and spatial design.',
+    tools: ['Illustrator', 'Dimension', 'Photoshop'],
+    imageUrl: 'https://images.unsplash.com/photo-1594631252845-29fc458635b7?q=80&w=1400&auto=format&fit=crop',
     galleryImages: [
-      'https://images.unsplash.com/photo-1544787210-2827d344b124?auto=format&fit=crop&q=80&w=1200',
-      'https://images.unsplash.com/photo-1594631252845-29fc4cc8cde9?auto=format&fit=crop&q=80&w=800',
-      'https://images.unsplash.com/photo-1550989460-0adf9ea622e2?auto=format&fit=crop&q=80&w=800',
-      'https://images.unsplash.com/photo-1627483262268-9c2b5b2834b5?auto=format&fit=crop&q=80&w=800'
+      'https://images.unsplash.com/photo-1594631252845-29fc458635b7?q=80&w=1400&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1563911191-333-289524029272?q=80&w=1400&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1515694590185-73647ba02c10?q=80&w=1400&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1544787210-2827d344b124?q=80&w=1400&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1576092768241-dec231879fc3?q=80&w=1400&auto=format&fit=crop'
     ]
   },
   {
-    id: 'xabo-skincare',
-    title: 'XABO Organic Identity',
-    category: 'Visual Communication',
-    description: 'Crafting a sustainable minimalist identity for organic skincare. Leveraging organic geometries and a muted color palette to symbolize purity and ethical beauty.',
-    role: 'Graphic Designer',
-    outcome: 'Established an evergreen social media design framework that catalyzed a 5,000+ follower growth within the first quarter.',
-    tools: ['Figma', 'Adobe Lightroom', 'Illustrator'],
-    imageUrl: 'https://images.unsplash.com/photo-1600857062241-98e5dba7f214?auto=format&fit=crop&q=80&w=800',
+    id: 'xabo-organic',
+    title: 'XABO Organic Lab',
+    category: 'Visual Strategy',
+    description: 'Sustainable skincare identity focusing on "Purity & Ethics". Developing a tactical design system for international organic standards.',
+    role: 'Art Director',
+    imageUrl: 'https://images.unsplash.com/photo-1612817288484-6f916006741a?q=80&w=1400&auto=format&fit=crop',
+    tools: ['Figma', 'Lightroom', 'Illustrator'],
+    outcome: '',
     galleryImages: [
-      'https://images.unsplash.com/photo-1600857062241-98e5dba7f214?auto=format&fit=crop&q=80&w=800',
-      'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&q=80&w=800'
+      'https://images.unsplash.com/photo-1612817288484-6f916006741a?q=80&w=1400&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?q=80&w=1400&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?q=80&w=1400&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?q=80&w=1400&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=1400&auto=format&fit=crop'
     ]
   },
   {
-    id: 'iky-catalog',
-    title: 'IKy Information Design',
-    category: 'Editorial & System Design',
-    description: 'Corporate architecture and technical visualization for high-security utility systems. Transforming complex data into accessible, elegant editorial layouts.',
-    role: 'Information Architect',
-    outcome: 'Engineered a 50-page technical design system that reduced user cognitive load and enhanced product comprehension for international stakeholders.',
-    tools: ['Adobe InDesign', 'Adobe Illustrator'],
-    imageUrl: 'https://images.unsplash.com/photo-1586717791821-3f44a563eb4c?auto=format&fit=crop&q=80&w=800',
+    id: 'iky-editorial',
+    title: 'IKy System Design',
+    category: 'Information Architecture',
+    description: 'Corporate editorial and technical visualization system. Translating complex utility data into elegant, human-readable visual assets.',
+    role: 'Visual Specialist',
+    imageUrl: 'https://images.unsplash.com/photo-1586717791821-3f44a563eb4c?q=80&w=1400&auto=format&fit=crop',
+    tools: ['InDesign', 'Illustrator', 'After Effects'],
+    outcome: '',
     galleryImages: [
-      'https://images.unsplash.com/photo-1586717791821-3f44a563eb4c?auto=format&fit=crop&q=80&w=800',
-      'https://images.unsplash.com/photo-1542744095-2ad48c08b0ee?auto=format&fit=crop&q=80&w=800'
+      'https://images.unsplash.com/photo-1586717791821-3f44a563eb4c?q=80&w=1400&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1606857521015-7f9fbf423b40?q=80&w=1400&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=1400&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1558655146-d09347e92766?q=80&w=1400&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1434626881859-194d67b2b86f?q=80&w=1400&auto=format&fit=crop'
     ]
   }
 ];
@@ -62,24 +69,24 @@ export const EXPERIENCES: ExperienceItem[] = [
     role: 'Visual Designer',
     company: 'Thien Co Tri Lien Co., Ltd',
     period: 'Oct 2024 - Present',
-    description: 'Spearheading the creative direction for high-end wellness and tea collectives. Responsible for holistic brand storytelling across packaging, digital interfaces, and spatial design.'
+    description: 'Leading creative narratives for luxury botanical brands, overseeing brand consistency across all physical and digital touchpoints.'
   },
   {
     id: '2',
     role: 'Graphic Design Associate',
     company: 'IKy Smart Utility Technology',
     period: 'Jul 2024 - Oct 2024',
-    description: 'Collaborated directly with the Design Lead to re-engineer the corporate identity. Focused on multi-channel marketing collateral and information systems for global trade showcases.'
+    description: 'Developed technical visualization systems and marketing collateral for international utility technology showcases.'
   }
 ];
 
 export const SKILL_GROUPS: SkillGroup[] = [
   {
     category: 'Core Expertise',
-    skills: ['Brand Architecture', 'UI/UX Ecosystems', 'Strategic Storytelling', 'Systemic Editorial Design', 'Motion Narrative', 'Packaging Design']
+    skills: ['Brand Identity', 'Editorial Design', 'Visual Strategy', 'UI/UX Ecosystems', 'Motion Narratives', 'Packaging Design']
   },
   {
-    category: 'Technical Stack',
-    skills: ['Adobe Creative Suite', 'Figma', 'Cinema 4D (Basics)', 'InDesign', 'After Effects', 'Prototyping']
+    category: 'Toolbox',
+    skills: ['Adobe Creative Suite', 'Figma', 'InDesign', 'After Effects', 'Dimension', 'Prototyping']
   }
 ];
