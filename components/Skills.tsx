@@ -2,129 +2,110 @@
 import React from 'react';
 
 const Skills: React.FC = () => {
-  const tools = [
-    { 
-      name: 'Photoshop', 
-      icon: 'https://img.icons8.com/color/144/adobe-photoshop.png' 
+  const categories = [
+    {
+      num: '01',
+      title: 'Brand Identity & Strategy',
+      desc: 'Crafting foundational visual systems and strategic market positioning.'
     },
-    { 
-      name: 'Illustrator', 
-      icon: 'https://img.icons8.com/color/144/adobe-illustrator.png' 
+    {
+      num: '02',
+      title: 'UI/UX & Digital Design',
+      desc: 'Engineering user-centric interfaces where aesthetics meet performance.'
     },
-    { 
-      name: 'InDesign', 
-      icon: 'https://img.icons8.com/color/144/adobe-indesign.png' 
+    {
+      num: '03',
+      title: 'Editorial & Information',
+      desc: 'Synthesizing complex data into elegant, intuitive layouts.'
     },
-    { 
-      name: 'After Effects', 
-      icon: 'https://img.icons8.com/color/144/adobe-after-effects.png' 
-    },
-    { 
-      name: 'Premiere Pro', 
-      icon: 'https://img.icons8.com/color/144/adobe-premiere-pro.png' 
-    },
-    { 
-      name: 'Figma', 
-      icon: 'https://img.icons8.com/color/144/figma--v1.png' 
-    },
-    { 
-      name: 'Canva', 
-      icon: 'https://img.icons8.com/color/144/canva.png' 
+    {
+      num: '04',
+      title: 'Motion & Storytelling',
+      desc: 'Infusing cinematic transitions and narratives into static assets.'
     }
   ];
 
-  const coreExpertise = [
-    { title: 'Brand Identity & Strategy', desc: 'Crafting foundational visual systems and strategic market positioning.' },
-    { title: 'UI/UX & Digital Design', desc: 'Engineering user-centric interfaces where aesthetics meet performance.' },
-    { title: 'Editorial & Information', desc: 'Synthesizing complex data into elegant, intuitive layouts.' },
-    { title: 'Motion & Storytelling', desc: 'Infusing cinematic transitions and narratives into static assets.' }
+  const tools = [
+    { name: 'Photoshop', icon: 'https://img.icons8.com/color/144/adobe-photoshop.png' },
+    { name: 'Illustrator', icon: 'https://img.icons8.com/color/144/adobe-illustrator.png' },
+    { name: 'Figma', icon: 'https://img.icons8.com/color/144/figma--v1.png' },
+    { name: 'InDesign', icon: 'https://img.icons8.com/color/144/adobe-indesign.png' },
+    { name: 'After Effects', icon: 'https://img.icons8.com/color/144/adobe-after-effects.png' },
+    { name: 'Premiere', icon: 'https://img.icons8.com/color/144/adobe-premiere-pro.png' }
   ];
 
   return (
-    <section id="skills" className="py-32 md:py-48 bg-[#FFF9FA] relative overflow-hidden">
-      {/* Decorative background element */}
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-rose-100/20 rounded-full blur-[120px] -z-10"></div>
-      
-      <div className="max-w-[1700px] mx-auto px-6 md:px-12 relative z-10">
-        {/* Header Section */}
-        <div className="grid lg:grid-cols-2 gap-12 items-end mb-24">
-          <div className="space-y-6">
-            <div className="flex items-center space-x-6">
-              <div className="w-12 h-[2px] bg-rose-400"></div>
-              <p className="text-rose-400 font-bold uppercase tracking-[0.8em] text-[10px]">Technical Stack</p>
-            </div>
-            <h2 className="text-5xl md:text-7xl lg:text-[7vw] font-display font-medium tracking-tighter leading-[0.85] text-gray-900">
-              Creative <br /><span className="italic holographic-text font-light">Ecosystem.</span>
-            </h2>
-          </div>
-          <div className="lg:text-right hidden lg:block pb-4">
-            <p className="text-lg md:text-xl text-gray-400 font-light italic max-w-sm ml-auto leading-relaxed">
-              Industry-standard precision merged with creative intuition.
-            </p>
-          </div>
+    <section id="skills" className="py-32 md:py-48 bg-[#FCF9F7] relative border-t border-rose-50">
+      <div className="max-w-7xl mx-auto px-8 md:px-16">
+        
+        {/* Header - Minimalist & Elegant */}
+        <div className="mb-24">
+          <span className="text-[10px] font-black uppercase tracking-[0.8em] text-rose-400 block mb-4">Mastery</span>
+          <h2 className="text-5xl md:text-7xl font-display font-medium text-gray-900 leading-none tracking-tighter">
+            Skill <span className="italic font-light text-rose-300">Set.</span>
+          </h2>
         </div>
 
-        <div className="grid lg:grid-cols-12 gap-8 items-stretch">
+        <div className="grid lg:grid-cols-12 gap-16 lg:gap-24">
           
-          {/* TECHNICAL STACK - Tools */}
-          <div className="lg:col-span-7 bg-white p-10 md:p-16 rounded-[40px] md:rounded-[50px] shadow-[0_30px_80px_-20px_rgba(232,122,144,0.1)] border border-rose-50/50 flex flex-col justify-center">
-            <div className="flex items-center justify-between mb-12">
-              <h3 className="text-xl md:text-2xl font-display font-bold text-gray-900 tracking-tight">Software <span className="text-rose-400 italic">Proficiency</span></h3>
-              <span className="text-[9px] font-black uppercase tracking-widest text-rose-200">The Toolbox</span>
-            </div>
-
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 md:gap-12">
-              {tools.map((tool) => (
-                <div key={tool.name} className="flex flex-col items-center group cursor-default">
-                  <div className="relative w-12 h-12 md:w-16 md:h-16 flex items-center justify-center mb-4 transition-all duration-500">
-                    <div className="absolute inset-[-10px] bg-rose-50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-lg"></div>
-                    <img 
-                      src={tool.icon} 
-                      alt={tool.name} 
-                      className="w-full h-full object-contain relative z-10 transition-transform duration-700 group-hover:scale-110"
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement;
-                        target.src = `https://ui-avatars.com/api/?name=${tool.name}&background=FFF1F3&color=E87A90&bold=true&font-size=0.45&rounded=true`;
-                      }}
-                      loading="lazy"
-                    />
+          {/* LEFT: 4 Skills in 2x2 Grid */}
+          <div className="lg:col-span-8">
+            <div className="grid md:grid-cols-2 gap-x-12 gap-y-16">
+              {categories.map((cat) => (
+                <div key={cat.num} className="group flex flex-col space-y-5">
+                  <div className="flex items-center space-x-4">
+                    <span className="text-3xl font-display italic text-rose-200 group-hover:text-rose-400 transition-colors duration-500 leading-none">
+                      {cat.num}
+                    </span>
+                    <div className="h-px flex-1 bg-gray-100 group-hover:bg-rose-100 transition-colors duration-500"></div>
                   </div>
-                  <p className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] text-gray-300 group-hover:text-rose-500 transition-colors duration-500 text-center">
-                    {tool.name}
-                  </p>
+                  
+                  <div className="space-y-3">
+                    <h3 className="text-xl md:text-2xl font-display font-bold text-gray-900 group-hover:text-rose-500 transition-colors duration-500">
+                      {cat.title}
+                    </h3>
+                    <p className="text-gray-400 font-light text-sm md:text-base leading-relaxed max-w-sm">
+                      {cat.desc}
+                    </p>
+                  </div>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* CORE DISCIPLINES - Disciplines (Compact) */}
-          <div className="lg:col-span-5 bg-gray-900 p-10 md:p-16 rounded-[40px] md:rounded-[50px] shadow-2xl flex flex-col justify-center">
-            <div className="flex items-center space-x-4 mb-10">
-              <h3 className="text-xl md:text-2xl font-display font-bold text-white tracking-tight">Core <span className="text-rose-300 italic">Disciplines</span></h3>
-              <div className="flex-1 h-px bg-white/10"></div>
-            </div>
-            
-            <div className="space-y-6 md:space-y-8">
-              {coreExpertise.map((item, idx) => (
-                <div key={item.title} className="group cursor-default">
-                  <div className="flex items-baseline space-x-4 mb-1">
-                    <span className="text-[9px] font-display italic text-rose-400 opacity-60">0{idx + 1}</span>
-                    <h4 className="text-base text-white/90 font-medium group-hover:text-rose-300 transition-colors duration-300">{item.title}</h4>
-                  </div>
-                  <p className="text-gray-500 text-[11px] md:text-xs font-light leading-relaxed group-hover:text-gray-400 transition-colors duration-300 pl-7 border-l border-white/5 ml-1">
-                    {item.desc}
-                  </p>
-                </div>
-              ))}
-            </div>
+          {/* RIGHT: Compact Toolbox - Icons are full color */}
+          <div className="lg:col-span-4 mt-8 lg:mt-0">
+            <div className="bg-white rounded-[40px] p-8 md:p-10 border border-gray-100 shadow-[0_30px_60px_-15px_rgba(232,122,144,0.1)] sticky top-32">
+              <div className="mb-10 text-center">
+                <h4 className="text-[9px] font-black uppercase tracking-[0.4em] text-gray-900 mb-2">Technical Toolbox</h4>
+                <div className="w-8 h-px bg-rose-200 mx-auto"></div>
+              </div>
 
-            <div className="mt-10 pt-6 border-t border-white/5">
-              <div className="flex items-center space-x-3">
-                <div className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse"></div>
-                <p className="text-[8px] font-bold uppercase tracking-[0.3em] text-gray-400">Strategic Design Standards</p>
+              <div className="grid grid-cols-3 gap-6 md:gap-8">
+                {tools.map((tool) => (
+                  <div key={tool.name} className="group flex flex-col items-center">
+                    <div className="w-12 h-12 md:w-14 md:h-14 bg-gray-50 rounded-2xl flex items-center justify-center border border-gray-50 transition-all duration-500 hover:shadow-lg hover:shadow-rose-100/50">
+                      <img 
+                        src={tool.icon} 
+                        alt={tool.name} 
+                        className="w-7 h-7 md:w-8 md:h-8 object-contain"
+                      />
+                    </div>
+                    <span className="mt-3 text-[7px] font-black text-gray-400 tracking-widest uppercase text-center w-full truncate">
+                      {tool.name.split(' ')[0]}
+                    </span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-12 pt-8 border-t border-gray-50 text-center">
+                <p className="text-[10px] text-gray-400 font-light italic leading-relaxed">
+                  Industry standard tools for <br/> <span className="text-rose-400">digital precision.</span>
+                </p>
               </div>
             </div>
           </div>
+
         </div>
       </div>
     </section>
